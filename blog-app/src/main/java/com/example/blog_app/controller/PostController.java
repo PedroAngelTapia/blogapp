@@ -1,43 +1,60 @@
 package com.example.blog_app.controller;
 
 import com.example.blog_app.model.Post;
-import com.example.blog_app.repository.PostRepository;
+import com.example.blog_app.service.PostService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000") // Permite conexión desde React
 @RestController
 @RequestMapping("/api/posts")
-@CrossOrigin(origins = "http://localhost:3000")
 public class PostController {
 
-    private final PostRepository postRepository;
-
-    public PostController(PostRepository postRepository) {
-        this.postRepository = postRepository;
-    }
+    @Autowired
+    private PostService postService;
 
     @GetMapping
     public List<Post> getAllPosts() {
-        return postRepository.findAll();
+        return postService.findAll();
     }
 
     @GetMapping("/{id}")
-    public Post getPostById(@PathVariable Long id) {
-        return postRepository.findById(id).orElse(null);
+    public ResponseEntity<Post> getPostById(@PathVariable Long id) {
+        try {
+            Post post = postService.findById(id);
+            return ResponseEntity.ok(post);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping
     public Post createPost(@RequestBody Post post) {
-        return postRepository.save(post);
+        return postService.save(post);
     }
 
     @PutMapping("/{id}")
-    public Post updatePost(@PathVariable Long id, @RequestBody Post updatedPost) {
-        return postRepository.findById(id).map(post -> {
-            post.setTitulo(updatedPost.getTitulo());
-            post.setContenido(updatedPost.getContenido());
-            return postRepository.save(post);
-        }).orElse(null);
+    public ResponseEntity<Post> updatePost(@PathVariable Long id, @RequestBody Post updatedPost) {
+        try {
+            Post existingPost = postService.findById(id);
+            existingPost.setTitulo(updatedPost.getTitulo());
+            existingPost.setContenido(updatedPost.getContenido());
+            return ResponseEntity.ok(postService.save(existingPost));
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePost(@PathVariable Long id) {
+        try {
+            postService.delete(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

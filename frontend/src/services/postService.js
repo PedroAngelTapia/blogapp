@@ -21,3 +21,8 @@ export const createPost = (postData) => {
 export const updatePost = (id, postData) => {
     return axios.put(`${API_URL}/${id}`, postData);
 };
+
+// ✅ Eliminar una publicación
+export const deletePost = (id) => {
+    return axios.delete(`${API_URL}/${id}`);
+};

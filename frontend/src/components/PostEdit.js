@@ -7,21 +7,21 @@ const PostEdit = () => {
     const navigate = useNavigate();
 
     const [post, setPost] = useState({
-        title: '',
-        content: ''
+        titulo: '',
+        contenido: ''
     });
 
     useEffect(() => {
         getPostById(id)
             .then((response) => {
                 setPost({
-                    title: response.data.title,
-                    content: response.data.content
+                    titulo: response.data.titulo,
+                    contenido: response.data.contenido
                 });
             })
             .catch((error) => {
-                console.error('Error al obtener el post', error);
-                alert('No se pudo cargar el post');
+                console.error('Error al obtener la publicación', error);
+                alert('No se pudo cargar la publicación');
             });
     }, [id]);
 
@@ -48,8 +48,8 @@ const PostEdit = () => {
                     <label>Título:</label>
                     <input
                         type="text"
-                        name="title"
-                        value={post.title}
+                        name="titulo"
+                        value={post.titulo}
                         onChange={handleChange}
                         required
                     />
@@ -57,8 +57,8 @@ const PostEdit = () => {
                 <div>
                     <label>Contenido:</label>
                     <textarea
-                        name="content"
-                        value={post.content}
+                        name="contenido"
+                        value={post.contenido}
                         onChange={handleChange}
                         required
                     />

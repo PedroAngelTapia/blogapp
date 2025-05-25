@@ -12,16 +12,24 @@ public class Post {
     private String titulo;
     private String contenido;
 
+    // 🔹 Constructor vacío requerido por JPA
     public Post() {
     }
 
+    // 🔹 Constructor con parámetros
     public Post(String titulo, String contenido) {
         this.titulo = titulo;
         this.contenido = contenido;
     }
 
+    // 🔹 Getters y setters
+
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitulo() {
