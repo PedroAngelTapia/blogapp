@@ -2,28 +2,27 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getPosts } from '../services/postService';
 
-const PostList = () => {
+function ListaPublicaciones() {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        getPosts()
-            .then((response) => setPosts(response.data))
-            .catch((error) => console.error(error));
+        getPosts().then(response => setPosts(response.data));
     }, []);
 
     return (
         <div>
             <h2>Lista de Publicaciones</h2>
             <ul>
-                {posts.map((post) => (
+                {posts.map(post => (
                     <li key={post.id}>
-                        <Link to={`/publicaciones/${post.id}`}>{post.title}</Link>{' '}
-                        <Link to={`/editar/${post.id}`}>Editar</Link>
+                        <Link to={`/publicaciones/${post.id}`}>{post.titulo}</Link>
+                        {" "}
+                        <Link to={`/editar/${post.id}`} style={{ color: 'blue' }}>Editar</Link>
                     </li>
                 ))}
             </ul>
         </div>
     );
-};
+}
 
-export default PostList;
+export default ListaPublicaciones;

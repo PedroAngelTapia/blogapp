@@ -1,45 +1,43 @@
 package com.example.blog_app.controller;
 
 import com.example.blog_app.model.Post;
-import com.example.blog_app.service.PostService;
+import com.example.blog_app.repository.PostRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/posts")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000")
 public class PostController {
 
-    private final PostService service;
+    private final PostRepository postRepository;
 
-    public PostController(PostService service) {
-        this.service = service;
+    public PostController(PostRepository postRepository) {
+        this.postRepository = postRepository;
     }
 
     @GetMapping
-    public List<Post> getAll() {
-        return service.findAll();
+    public List<Post> getAllPosts() {
+        return postRepository.findAll();
     }
 
     @GetMapping("/{id}")
-    public Post getById(@PathVariable Long id) {
-        return service.findById(id);
+    public Post getPostById(@PathVariable Long id) {
+        return postRepository.findById(id).orElse(null);
     }
 
     @PostMapping
-    public Post create(@RequestBody Post post) {
-        return service.save(post);
+    public Post createPost(@RequestBody Post post) {
+        return postRepository.save(post);
     }
 
     @PutMapping("/{id}")
-    public Post update(@PathVariable Long id, @RequestBody Post post) {
-        post.setId(id);
-        return service.save(post);
-    }
-
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        service.delete(id);
+    public Post updatePost(@PathVariable Long id, @RequestBody Post updatedPost) {
+        return postRepository.findById(id).map(post -> {
+            post.setTitulo(updatedPost.getTitulo());
+            post.setContenido(updatedPost.getContenido());
+            return postRepository.save(post);
+        }).orElse(null);
     }
 }
