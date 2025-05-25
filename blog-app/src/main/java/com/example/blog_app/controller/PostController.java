@@ -1,3 +1,4 @@
+//Expone la API REST al frontend /api/posts y maneja las solicitudes HTTP para las publicaciones del blog.
 package com.example.blog_app.controller;
 
 import com.example.blog_app.model.Post;

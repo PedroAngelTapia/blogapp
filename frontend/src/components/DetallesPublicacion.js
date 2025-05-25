@@ -1,3 +1,5 @@
+//Muestra los detalles de una publicación específica del blog
+
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getPostById } from '../services/postService';

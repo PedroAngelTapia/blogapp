@@ -1,3 +1,4 @@
+//Entidad que representa una publicacion del blog
 package com.example.blog_app.model;
 
 import jakarta.persistence.*;

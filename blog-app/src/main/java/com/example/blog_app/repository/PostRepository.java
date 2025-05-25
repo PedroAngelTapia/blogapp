@@ -1,3 +1,4 @@
+//Interfaz que extiende JpaRepository para manejar las operaciones CRUD de la entidad Post
 package com.example.blog_app.repository;
 
 import com.example.blog_app.model.Post;

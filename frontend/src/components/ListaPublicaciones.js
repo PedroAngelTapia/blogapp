@@ -1,6 +1,8 @@
+//Muestra la lista  de publicaciones del blog y permite eliminarlas
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getPosts, deletePost } from '../services/postService';
+import './ListaPublicaciones.css'; // ← Importamos los estilos
 
 function ListaPublicaciones() {
     const [posts, setPosts] = useState([]);
@@ -25,16 +27,18 @@ function ListaPublicaciones() {
     };
 
     return (
-        <div>
+        <div className="lista-publicaciones">
             <h2>Lista de Publicaciones</h2>
             <ul>
                 {posts.map(post => (
                     <li key={post.id}>
-                        <Link to={`/publicaciones/${post.id}`}>{post.titulo}</Link>
-                        {" "}
-                        <Link to={`/editar/${post.id}`} style={{ color: 'blue' }}>Editar</Link>
-                        {" "}
-                        <button onClick={() => handleDelete(post.id)} style={{ color: 'red' }}>Eliminar</button>
+                        <div>
+                            <Link to={`/publicaciones/${post.id}`}>{post.titulo}</Link>
+                        </div>
+                        <div className="links">
+                            <Link to={`/editar/${post.id}`} className="enlace-editar">Editar</Link>
+                            <button onClick={() => handleDelete(post.id)} className="boton-eliminar">Eliminar</button>
+                        </div>
                     </li>
                 ))}
             </ul>

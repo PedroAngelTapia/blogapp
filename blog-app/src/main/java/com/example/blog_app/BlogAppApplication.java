@@ -1,3 +1,5 @@
+//Clase principal de la aplicación Spring Boot
+
 package com.example.blog_app;
 
 import com.example.blog_app.model.Post;

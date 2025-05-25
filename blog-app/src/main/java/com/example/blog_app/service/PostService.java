@@ -1,3 +1,4 @@
+//Contiene la logica:Obtener publicaciones,buscar por ID, guardad, eliminar.
 package com.example.blog_app.service;
 
 import com.example.blog_app.model.Post;

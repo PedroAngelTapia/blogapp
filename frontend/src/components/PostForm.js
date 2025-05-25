@@ -1,3 +1,4 @@
+//Forumulario para crear una nueva publicación
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPost } from '../services/postService';
